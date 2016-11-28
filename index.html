@@ -7,6 +7,8 @@
   <body>
     <h1>D3 Playground</h1>
     <div id="display"></div>
+
+    <!-- import jQuery, tipsy.js, and d3 -->
     <script
       src="https://code.jquery.com/jquery-3.1.1.js"
       integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
@@ -17,7 +19,44 @@
 
     <!-- Table -->
     <script>
+      var display = d3.select('#display');
       console.log('hello world')
+      d3.json('data/pics.json', function(err, pics) {
+        if (err) {
+          console.error("Error getting data/pics.json: ", err);
+        } else {
+          var data = pics.data.children;
+          console.log('data: ', data)
+
+          var table = display.append("table")
+
+          var rows = table.selectAll("tr.row")
+            .data(data)
+
+          var rowsEnter = rows.enter()
+            .append("tr").classed("row", true)
+
+          rowsEnter.append("td")
+            .text(function(d) { return d.data.score })
+
+          rowsEnter.append("td")
+            .append("a")
+            .attr("href", function(d) { return d.data.url })
+            .append("img")
+            .attr("src", function(d) { return d.data.thumbnail })
+
+          rowsEnter.append("td")
+            .append("a")
+            .attr("href", function(d) { return d.data.url })
+            .text(function(d) { return d.data.title })
+
+          rowsEnter.append("td")
+            .text(function(d) { return d.data.ups })
+
+          rowsEnter.append("td")
+            .text(function(d) { return d.data.downs })
+        }
+      })
     </script>
   </body>
 </html>
