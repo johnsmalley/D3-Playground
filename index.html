@@ -6,6 +6,7 @@
   </head>
   <body>
     <h1>D3 Playground</h1>
+    <svg></svg>
     <div id="display"></div>
 
     <!-- import jQuery, tipsy.js, and d3 -->
@@ -15,8 +16,9 @@
       crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.js"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.3.0/d3.js"></script>
     <script src="table.js"></script>
+    <script src="scatter.js"></script>
 
     <!-- Table -->
     <script>
@@ -27,19 +29,25 @@
           console.error("Error getting data/pics.json: ", err);
         } else {
           var data = pics.data.children;
+          data.forEach(function(d) {
+            d.data.create += 1000;
+          })
           console.log('data: ', data)
 
           var display = d3.select("#display")
           
           // table container
           var tdiv = display.append('div').classed("table", true)
-          
           var table = d3.chart.table()
-          
           table.data(data)
-          
           table(tdiv)
 
+          var svg = d3.select("svg");
+          // scatter plot
+          var sgroup = svg.append("g");
+          var scatter = d3.chart.scatter()
+          scatter.data(data)
+          scatter(sgroup)
         }
       })
     </script>
