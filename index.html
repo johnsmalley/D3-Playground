@@ -16,6 +16,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="table.js"></script>
 
     <!-- Table -->
     <script>
@@ -28,33 +29,17 @@
           var data = pics.data.children;
           console.log('data: ', data)
 
-          var table = display.append("table")
+          var display = d3.select("#display")
+          
+          // table container
+          var tdiv = display.append('div').classed("table", true)
+          
+          var table = d3.chart.table()
+          
+          table.data(data)
+          
+          table(tdiv)
 
-          var rows = table.selectAll("tr.row")
-            .data(data)
-
-          var rowsEnter = rows.enter()
-            .append("tr").classed("row", true)
-
-          rowsEnter.append("td")
-            .text(function(d) { return d.data.score })
-
-          rowsEnter.append("td")
-            .append("a")
-            .attr("href", function(d) { return d.data.url })
-            .append("img")
-            .attr("src", function(d) { return d.data.thumbnail })
-
-          rowsEnter.append("td")
-            .append("a")
-            .attr("href", function(d) { return d.data.url })
-            .text(function(d) { return d.data.title })
-
-          rowsEnter.append("td")
-            .text(function(d) { return d.data.ups })
-
-          rowsEnter.append("td")
-            .text(function(d) { return d.data.downs })
         }
       })
     </script>
