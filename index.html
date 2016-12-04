@@ -19,6 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.3.0/d3.js"></script>
     <script src="table.js"></script>
     <script src="scatter.js"></script>
+    <script src="brush.js"></script>
 
     <!-- Table -->
     <script>
@@ -48,6 +49,12 @@
           var scatter = d3.chart.scatter()
           scatter.data(data)
           scatter(sgroup)
+
+          //brush
+          var bgroup = svg.append("g")
+          var brush = d3.chart.brush()
+          brush.data(data)
+          brush(bgroup)
         }
       })
     </script>
